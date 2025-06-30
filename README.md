@@ -260,7 +260,6 @@ For detailed production deployment instructions, see [PRODUCTION_DEPLOYMENT.md](
 | `VITE_GEMINI_API_KEY` | Google Gemini API key | ✅ | - |
 | `VITE_APP_NAME` | Application name | ✅ | FreelanceOS |
 | `VITE_APP_VERSION` | Application version | ✅ | 1.0.0 |
-| `VITE_RESET_ENABLED` | Enable demo reset system | ❌ | false |
 | `VITE_ENABLE_ANALYTICS` | Enable analytics tracking | ❌ | false |
 | `VITE_ENABLE_DEMO_MODE` | Enable demo mode features | ❌ | false |
 
@@ -271,12 +270,10 @@ FreelanceOS supports feature flags for different environments:
 ```env
 # Demo Environment
 VITE_ENABLE_DEMO_MODE=true
-VITE_RESET_ENABLED=true
-VITE_RESET_NOTIFY_USERS=true
+VITE_ENABLE_ANALYTICS=false
 
 # Production Environment
 VITE_ENABLE_DEMO_MODE=false
-VITE_RESET_ENABLED=false
 VITE_ENABLE_ANALYTICS=true
 ```
 
@@ -287,29 +284,7 @@ VITE_ENABLE_ANALYTICS=true
 - **[API Documentation](docs/API.md)** - Backend API endpoints and usage
 - **[Component Library](docs/COMPONENTS.md)** - UI component documentation
 
-## 🔧 API Endpoints
 
-FreelanceOS includes several API endpoints for automation and management:
-
-### Database Reset (Demo Mode)
-
-```bash
-# Check system status
-GET /api/admin/reset-status
-
-# Trigger manual reset
-POST /api/admin/trigger-reset
-Content-Type: application/json
-{
-  "adminKey": "your_admin_key",
-  "force": true,
-  "dryRun": false
-}
-
-# Automated cron reset (Vercel)
-POST /api/cron/database-reset
-Authorization: Bearer your_cron_secret
-```
 
 ## 🐛 Troubleshooting
 
@@ -392,13 +367,7 @@ npm run build           # Build for production
 npm run preview         # Preview production build
 npm run lint            # Run ESLint
 
-# Testing
-npm run test:cron:dry   # Test cron system (dry run)
-npm run test:cron       # Test cron system (actual)
-npm run verify:backend  # Verify backend functionality
 
-# Utilities
-npm run reset:manual    # Manual database reset
 ```
 
 ## 🌟 Roadmap

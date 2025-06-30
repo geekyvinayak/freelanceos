@@ -82,8 +82,6 @@ NODE_ENV=production
 
 # Feature Flags for Production
 VITE_ENABLE_DEMO_MODE=false
-VITE_RESET_ENABLED=false
-VITE_RESET_NOTIFY_USERS=false
 VITE_ENABLE_REGISTRATION=true
 VITE_ENABLE_PASSWORD_RESET=true
 
@@ -91,12 +89,6 @@ VITE_ENABLE_PASSWORD_RESET=true
 VITE_ENABLE_ANALYTICS=true
 VITE_ENABLE_ERROR_REPORTING=true
 VITE_ENABLE_PERFORMANCE_MONITORING=true
-
-# Backend Configuration (Vercel)
-SUPABASE_URL=https://your-production-project.supabase.co
-SUPABASE_SERVICE_ROLE_KEY=your_production_service_role_key
-CRON_SECRET=your_secure_random_string
-ADMIN_API_KEY=your_admin_api_key
 
 # Optional: Analytics
 VITE_GOOGLE_ANALYTICS_ID=G-XXXXXXXXXX
@@ -140,10 +132,6 @@ In Vercel project settings, add all environment variables from your `.env.produc
 - All other `VITE_*` variables
 
 **Backend Variables:**
-- `SUPABASE_URL`
-- `SUPABASE_SERVICE_ROLE_KEY`
-- `CRON_SECRET`
-- `ADMIN_API_KEY`
 - `NODE_ENV`
 
 ### 3. Deploy

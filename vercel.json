@@ -8,12 +8,7 @@
       "destination": "/index.html"
     }
   ],
-  "crons": [
-    {
-      "path": "/api/cron/database-reset",
-      "schedule": "0 0 * * *"
-    }
-  ],
+
   "env": {
     "VITE_APP_NAME": "FreelanceOS",
     "VITE_APP_VERSION": "1.0.0"
