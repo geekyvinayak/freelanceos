@@ -52,7 +52,8 @@ export default async function handler(req, res) {
 
     if (projectIds.length === 0) {
       console.log('No projects found for user, skipping deletion')
-    } else {
+    } 
+    // else {
       // STEP 2: Delete bills first (they reference projects)
       // console.log('Deleting bills...')
       // const { error: billsDeleteError } = await supabase
