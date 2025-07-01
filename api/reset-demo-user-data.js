@@ -20,7 +20,7 @@ export default async function handler(req, res) {
   try {
     // Replace this with your actual demo user ID from Supabase Auth dashboard
     // Go to Supabase Dashboard → Authentication → Users → find user@demo.com → copy User ID
-    let userId = '0f5ac35a-7847-4430-9843-c58ae22b3700'
+    let userId = '5ef288d4-e9eb-4e17-8d8a-bbe41073441a'
 
     // Try to find existing user ID from projects table
     const { data: existingProjects } = await supabase
