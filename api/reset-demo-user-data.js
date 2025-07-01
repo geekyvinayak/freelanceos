@@ -220,7 +220,7 @@ export default async function handler(req, res) {
       .insert([
         {
           project_id: projectMap['E-commerce Website Redesign'],
-          invoice_number: 'INV-2023-0001',
+          invoice_number: 'DEM-2023-0001',
           amount: 3500.00,
           description: 'E-commerce Website Redesign - Phase 1: Design and Wireframing',
           status: 'paid',
@@ -229,7 +229,7 @@ export default async function handler(req, res) {
         },
         {
           project_id: projectMap['E-commerce Website Redesign'],
-          invoice_number: 'INV-2023-0002',
+          invoice_number: 'DEM-2023-0002',
           amount: 4200.00,
           description: 'E-commerce Website Redesign - Phase 2: Frontend Development',
           status: 'pending',
@@ -238,7 +238,7 @@ export default async function handler(req, res) {
         },
         {
           project_id: projectMap['Mobile Banking App'],
-          invoice_number: 'INV-2023-0003',
+          invoice_number: 'DEM-2023-0003',
           amount: 8500.00,
           description: 'Mobile Banking App Development - Complete app development',
           status: 'paid',
@@ -247,7 +247,7 @@ export default async function handler(req, res) {
         },
         {
           project_id: projectMap['Mobile Banking App'],
-          invoice_number: 'INV-2023-0004',
+          invoice_number: 'DEM-2023-0004',
           amount: 2800.00,
           description: 'Mobile Banking App - Security Audit and Testing',
           status: 'paid',
@@ -256,7 +256,7 @@ export default async function handler(req, res) {
         },
         {
           project_id: projectMap['Corporate Brand Identity'],
-          invoice_number: 'INV-2023-0005',
+          invoice_number: 'DEM-2023-0005',
           amount: 2200.00,
           description: 'Corporate Brand Identity Package - Complete branding',
           status: 'paid',
@@ -265,7 +265,7 @@ export default async function handler(req, res) {
         },
         {
           project_id: projectMap['Restaurant Management System'],
-          invoice_number: 'INV-2023-0006',
+          invoice_number: 'DEM-2023-0006',
           amount: 4500.00,
           description: 'Restaurant Management System - Phase 1 Development',
           status: 'pending',
@@ -274,7 +274,7 @@ export default async function handler(req, res) {
         },
         {
           project_id: projectMap['Real Estate Platform'],
-          invoice_number: 'INV-2023-0007',
+          invoice_number: 'DEM-2023-0007',
           amount: 3200.00,
           description: 'Real Estate Platform - Initial Development Phase',
           status: 'pending',
@@ -283,7 +283,7 @@ export default async function handler(req, res) {
         },
         {
           project_id: projectMap['Healthcare Dashboard'],
-          invoice_number: 'INV-2023-0008',
+          invoice_number: 'DEM-2023-0008',
           amount: 6800.00,
           description: 'Healthcare Dashboard Development - Complete system',
           status: 'paid',
@@ -292,7 +292,7 @@ export default async function handler(req, res) {
         },
         {
           project_id: projectMap['Healthcare Dashboard'],
-          invoice_number: 'INV-2023-0009',
+          invoice_number: 'DEM-2023-0009',
           amount: 1500.00,
           description: 'Healthcare Dashboard - Maintenance and Support Package',
           status: 'paid',
