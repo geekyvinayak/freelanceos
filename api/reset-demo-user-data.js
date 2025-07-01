@@ -19,7 +19,6 @@ export default async function handler(req, res) {
 
   try {
     // Replace this with your actual demo user ID from Supabase Auth dashboard
-    // Go to Supabase Dashboard → Authentication → Users → find user@demo.com → copy User ID
     let userId = '5ef288d4-e9eb-4e17-8d8a-bbe41073441a'
 
     // Try to find existing user ID from projects table
@@ -35,38 +34,66 @@ export default async function handler(req, res) {
       console.log('Using default demo user ID:', userId)
     }
 
-    // Delete existing data (in correct order)
-    console.log('Deleting existing data...')
+    console.log('Starting deletion process for user:', userId)
 
-    // Get project IDs first
-    const { data: projects } = await supabase
+    // STEP 1: Get all project IDs for this user
+    const { data: userProjects, error: projectFetchError } = await supabase
       .from('projects')
       .select('id')
       .eq('user_id', userId)
 
-    const projectIds = projects?.map(p => p.id) || []
+    if (projectFetchError) {
+      console.error('Error fetching projects:', projectFetchError)
+      return res.status(500).json({ error: 'Failed to fetch projects' })
+    }
 
-    if (projectIds.length > 0) {
-      // Delete bills
-      await supabase
+    const projectIds = userProjects?.map(p => p.id) || []
+    console.log('Found project IDs:', projectIds)
+
+    if (projectIds.length === 0) {
+      console.log('No projects found for user, skipping deletion')
+    } else {
+      // STEP 2: Delete bills first (they reference projects)
+      console.log('Deleting bills...')
+      const { error: billsDeleteError } = await supabase
         .from('bills')
         .delete()
         .in('project_id', projectIds)
 
-      // Delete notes
-      await supabase
+      if (billsDeleteError) {
+        console.error('Error deleting bills:', billsDeleteError)
+        return res.status(500).json({ error: 'Failed to delete bills' })
+      }
+      console.log('Bills deleted successfully')
+
+      // STEP 3: Delete notes (they also reference projects)
+      console.log('Deleting notes...')
+      const { error: notesDeleteError } = await supabase
         .from('notes')
         .delete()
         .in('project_id', projectIds)
+
+      if (notesDeleteError) {
+        console.error('Error deleting notes:', notesDeleteError)
+        return res.status(500).json({ error: 'Failed to delete notes' })
+      }
+      console.log('Notes deleted successfully')
     }
 
-    // Delete projects
-    await supabase
+    // STEP 4: Delete projects last (after all dependent records are gone)
+    console.log('Deleting projects...')
+    const { error: projectsDeleteError } = await supabase
       .from('projects')
       .delete()
       .eq('user_id', userId)
 
-    console.log('Inserting new demo data...')
+    if (projectsDeleteError) {
+      console.error('Error deleting projects:', projectsDeleteError)
+      return res.status(500).json({ error: 'Failed to delete projects' })
+    }
+    console.log('Projects deleted successfully')
+
+    console.log('All existing data deleted, now inserting new demo data...')
 
     // Insert projects
     const { data: newProjects, error: projectError } = await supabase
@@ -122,6 +149,8 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: 'Failed to insert projects' })
     }
 
+    console.log('New projects inserted:', newProjects?.length)
+
     // Get project IDs for notes and bills
     const projectMap = {}
     newProjects?.forEach(project => {
@@ -129,6 +158,7 @@ export default async function handler(req, res) {
     })
 
     // Insert notes
+    console.log('Inserting notes...')
     const { error: notesError } = await supabase
       .from('notes')
       .insert([
@@ -214,7 +244,10 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: 'Failed to insert notes' })
     }
 
+    console.log('Notes inserted successfully')
+
     // Insert bills
+    console.log('Inserting bills...')
     const { error: billsError } = await supabase
       .from('bills')
       .insert([
@@ -306,7 +339,9 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: 'Failed to insert bills' })
     }
 
+    console.log('Bills inserted successfully')
     console.log('Demo data reset completed successfully')
+    
     return res.status(200).json({
       message: 'Demo data reset successfully',
       projects: newProjects?.length || 0,
@@ -317,6 +352,6 @@ export default async function handler(req, res) {
 
   } catch (error) {
     console.error('Error in reset function:', error)
-    return res.status(500).json({ error: 'Internal server error' })
+    return res.status(500).json({ error: 'Internal server error', details: error.message })
   }
 }
