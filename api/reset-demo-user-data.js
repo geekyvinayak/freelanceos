@@ -18,23 +18,22 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Find demo user
-    const { data: users, error: userError } = await supabase
-      .from('auth.users')
-      .select('id')
-      .eq('email', 'user@demo.com')
+    // Replace this with your actual demo user ID from Supabase Auth dashboard
+    // Go to Supabase Dashboard → Authentication → Users → find user@demo.com → copy User ID
+    let userId = '0f5ac35a-7847-4430-9843-c58ae22b3700'
+
+    // Try to find existing user ID from projects table
+    const { data: existingProjects } = await supabase
+      .from('projects')
+      .select('user_id')
       .limit(1)
 
-    if (userError) {
-      console.error('Error finding user:', userError)
-      return res.status(500).json({ error: 'Failed to find demo user' })
+    if (existingProjects && existingProjects.length > 0) {
+      userId = existingProjects[0].user_id
+      console.log('Using existing user ID from projects:', userId)
+    } else {
+      console.log('Using default demo user ID:', userId)
     }
-
-    if (!users || users.length === 0) {
-      return res.status(404).json({ error: 'Demo user not found' })
-    }
-
-    const userId = users[0].id
 
     // Delete existing data (in correct order)
     console.log('Deleting existing data...')
