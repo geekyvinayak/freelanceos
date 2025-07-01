@@ -1,0 +1,40 @@
+name: Reset Demo Data
+
+on:
+  # Run every 2 minutes
+  schedule:
+    - cron: '*/2 * * * *'
+  
+  # Manual trigger
+  workflow_dispatch:
+
+jobs:
+  reset-demo:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Reset Demo Data
+      run: |
+        echo "🔄 Resetting demo data..."
+        
+        response=$(curl -s -w "%{http_code}" -X POST \
+          "${{ secrets.VERCEL_DOMAIN }}/api/reset-demo-user-data" \
+          -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
+          -H "Content-Type: application/json")
+        
+        http_code="${response: -3}"
+        body="${response%???}"
+        
+        echo "HTTP Status: $http_code"
+        echo "Response: $body"
+        
+        if [ "$http_code" = "200" ]; then
+          echo "✅ Demo data reset successfully!"
+        else
+          echo "❌ Demo data reset failed!"
+          exit 1
+        fi
+    
+    - name: Log completion
+      run: |
+        echo "Demo data reset completed at: $(date)"
