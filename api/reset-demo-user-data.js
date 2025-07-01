@@ -27,11 +27,11 @@ export default async function handler(req, res) {
           -- Get the user ID
           SELECT id INTO target_user_id 
           FROM auth.users 
-          WHERE email = 'user@example.com';
+          WHERE email = 'user@demo.com';
           
           -- Exit if user not found
           IF target_user_id IS NULL THEN
-              RAISE NOTICE 'User with email user@example.com not found';
+              RAISE NOTICE 'User with email user@demo.com not found';
               RETURN;
           END IF;
           
@@ -85,7 +85,7 @@ export default async function handler(req, res) {
           ((SELECT id FROM projects WHERE name = 'Healthcare Dashboard' AND user_id = target_user_id), 'INV-2023-0008', 6800.00, 'Healthcare Dashboard Development - Complete system', 'paid', CURRENT_DATE - INTERVAL '85 days', NOW() - INTERVAL '90 days'),
           ((SELECT id FROM projects WHERE name = 'Healthcare Dashboard' AND user_id = target_user_id), 'INV-2023-0009', 1500.00, 'Healthcare Dashboard - Maintenance and Support Package', 'paid', CURRENT_DATE - INTERVAL '75 days', NOW() - INTERVAL '80 days');
 
-          RAISE NOTICE 'User data successfully reset and populated for: user@example.com';
+          RAISE NOTICE 'User data successfully reset and populated for: user@demo.com';
       END $$;
     `
 
