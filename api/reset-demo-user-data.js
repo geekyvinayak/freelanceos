@@ -54,31 +54,31 @@ export default async function handler(req, res) {
       console.log('No projects found for user, skipping deletion')
     } else {
       // STEP 2: Delete bills first (they reference projects)
-      console.log('Deleting bills...')
-      const { error: billsDeleteError } = await supabase
-        .from('bills')
-        .delete()
-        .in('project_id', projectIds)
+      // console.log('Deleting bills...')
+      // const { error: billsDeleteError } = await supabase
+      //   .from('bills')
+      //   .delete()
+      //   .in('project_id', projectIds)
 
-      if (billsDeleteError) {
-        console.error('Error deleting bills:', billsDeleteError)
-        return res.status(500).json({ error: 'Failed to delete bills' })
-      }
-      console.log('Bills deleted successfully')
+      // if (billsDeleteError) {
+      //   console.error('Error deleting bills:', billsDeleteError)
+      //   return res.status(500).json({ error: 'Failed to delete bills' })
+      // }
+      // console.log('Bills deleted successfully')
 
       // STEP 3: Delete notes (they also reference projects)
-      console.log('Deleting notes...')
-      const { error: notesDeleteError } = await supabase
-        .from('notes')
-        .delete()
-        .in('project_id', projectIds)
+    //   console.log('Deleting notes...')
+    //   const { error: notesDeleteError } = await supabase
+    //     .from('notes')
+    //     .delete()
+    //     .in('project_id', projectIds)
 
-      if (notesDeleteError) {
-        console.error('Error deleting notes:', notesDeleteError)
-        return res.status(500).json({ error: 'Failed to delete notes' })
-      }
-      console.log('Notes deleted successfully')
-    }
+    //   if (notesDeleteError) {
+    //     console.error('Error deleting notes:', notesDeleteError)
+    //     return res.status(500).json({ error: 'Failed to delete notes' })
+    //   }
+    //   console.log('Notes deleted successfully')
+    // }
 
     // STEP 4: Delete projects last (after all dependent records are gone)
     console.log('Deleting projects...')
